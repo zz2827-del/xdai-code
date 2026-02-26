@@ -1,0 +1,333 @@
+:root {
+    --bg-color: #5c94fc;
+    --ground-color: #00aa00;
+    --text-color: #ffffff;
+    --error-color: #ff5555;
+    --success-color: #55ff55;
+    --panel-bg: rgba(0, 0, 0, 0.7);
+    --pixel-font: 'Press Start 2P', cursive;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #222;
+    color: var(--text-color);
+    font-family: var(--pixel-font);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('background.svg');
+    /* Stretch so grass is consistently placed */
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    background-position: left bottom;
+}
+
+.entity {
+    position: absolute;
+    bottom: 14vh;
+    /* Stands on the grass */
+    transform: translateX(-50%);
+    transition: left 0.2s linear;
+}
+
+.entity img {
+    height: 100px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.gorilla-sprite {
+    width: 120px;
+    height: 120px;
+    background-image: url('gorilla.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    image-rendering: pixelated;
+    animation: gorilla-run 0.4s infinite alternate ease-in-out;
+    transform-origin: bottom center;
+}
+
+@keyframes gorilla-run {
+    0% {
+        transform: scaleY(0.95) scaleX(1.05) translateY(0px) rotate(-5deg);
+    }
+
+    50% {
+        transform: scaleY(1.05) scaleX(0.95) translateY(-10px) rotate(0deg);
+    }
+
+    100% {
+        transform: scaleY(0.95) scaleX(1.05) translateY(0px) rotate(5deg);
+    }
+}
+
+.runner-sprite {
+    width: 100px;
+    height: 100px;
+    background-image: url('runner.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    image-rendering: pixelated;
+    animation: runner-run 0.3s infinite alternate ease-in-out;
+    transform-origin: bottom center;
+}
+
+@keyframes runner-run {
+    0% {
+        transform: scaleY(0.95) scaleX(1.05) translateY(0px) rotate(5deg);
+    }
+
+    50% {
+        transform: scaleY(1.05) scaleX(0.95) translateY(-15px) rotate(15deg);
+    }
+
+    100% {
+        transform: scaleY(0.95) scaleX(1.05) translateY(0px) rotate(25deg);
+    }
+}
+
+/* Fallback styles in case image fails */
+#avatar {
+    left: 400px;
+    z-index: 10;
+}
+
+#gorilla {
+    left: 100px;
+    z-index: 10;
+}
+
+#door {
+    left: 800px;
+    bottom: 14vh;
+    font-size: 80px;
+    z-index: 5;
+    display: none;
+    /* Hide until end */
+}
+
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Let clicks pass to game, if any */
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+}
+
+#progress-container {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    gap: 10px;
+}
+
+#progress-bar-bg {
+    flex-grow: 1;
+    height: 12px;
+    background-color: #333;
+    border: 2px solid #fff;
+    border-radius: 6px;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#avatar-marker,
+#gorilla-marker {
+    position: absolute;
+    top: 50%;
+    /* Center vertically over the bar */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /* Make them points/circles */
+    margin-top: -10px;
+    /* Offset by half the height to perfectly center */
+    border: 3px solid #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    z-index: 10;
+}
+
+#avatar-marker {
+    background-color: #55ff55;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#gorilla-marker {
+    background-color: #ff5555;
+    left: 10%;
+    transform: translateX(-50%);
+}
+
+.emoji {
+    font-size: 24px;
+    font-family: sans-serif;
+}
+
+#prompt-container {
+    position: absolute;
+    bottom: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--panel-bg);
+    padding: 20px;
+    border: 4px solid #fff;
+    text-align: center;
+    pointer-events: auto;
+    /* Re-enable pointer events for input */
+    width: 90%;
+    max-width: 600px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#verb-prompt {
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    color: #ffd700;
+    text-shadow: 2px 2px 0px #000;
+}
+
+#answer-input {
+    width: 100%;
+    padding: 15px;
+    font-family: var(--pixel-font);
+    font-size: 16px;
+    border: 4px solid #fff;
+    background-color: #222;
+    color: #fff;
+    outline: none;
+    text-align: center;
+    text-transform: lowercase;
+}
+
+#answer-input:focus {
+    border-color: #ffd700;
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+    border-color: var(--error-color) !important;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translateX(-1px);
+    }
+
+    20%,
+    80% {
+        transform: translateX(2px);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translateX(-4px);
+    }
+
+    40%,
+    60% {
+        transform: translateX(4px);
+    }
+}
+
+.success {
+    animation: pulse 0.5s ease-out both;
+    border-color: var(--success-color) !important;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    pointer-events: auto;
+}
+
+#overlay-title {
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: #ffd700;
+    text-shadow: 4px 4px 0px #aa0000;
+}
+
+#overlay-text {
+    font-size: 20px;
+    margin-bottom: 40px;
+    animation: blink 1s infinite step-end;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.instructions {
+    font-size: 12px;
+    line-height: 2;
+    background-color: #222;
+    border: 2px dashed #666;
+    padding: 20px;
+    max-width: 600px;
+}
