@@ -74,7 +74,7 @@ function startGame() {
     playerDistance = 500;
     gorillaDistance = 0;
     bgOffset = 0;
-    promptTimer = 3; // Show prompt immediately
+    promptTimer = 1.5; // Show prompt immediately
     isPromptActive = false;
 
     messageOverlay.classList.add('hidden');
