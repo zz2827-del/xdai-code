@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish Conjugation Runner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="background"></div>
+        <div id="door" class="entity">🚪</div>
+        <div id="gorilla" class="entity">
+            <div class="gorilla-sprite"></div>
+        </div>
+        <div id="avatar" class="entity">
+            <div class="runner-sprite"></div>
+        </div>
+
+        <div id="ui-layer">
+            <div id="progress-container">
+                <span class="emoji">🦍</span>
+                <div id="progress-bar-bg">
+                    <div id="progress-bar"></div>
+                    <div id="gorilla-marker"></div>
+                    <div id="avatar-marker"></div>
+                </div>
+                <span class="emoji">🚪</span>
+            </div>
+
+            <div id="prompt-container" class="hidden">
+                <div id="verb-prompt"></div>
+                <input type="text" id="answer-input" placeholder="Conjugate..." autocomplete="off">
+            </div>
+
+            <div id="message-overlay" class="overlay">
+                <h1 id="overlay-title">Spanish Runner</h1>
+                <p id="overlay-text">Press Enter To Start</p>
+                <div class="instructions">
+                    <p>Escape the gorilla by typing the correct Spanish conjugation!</p>
+                    <p>Format: [infinitive] — [pronoun] (presente)</p>
+                    <p>Type ONLY the verb (e.g., 'hablo').</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
